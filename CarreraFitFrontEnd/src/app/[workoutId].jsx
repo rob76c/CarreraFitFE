@@ -1,19 +1,32 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import exercises from "../../assets/data/exercises.json";
 import { Stack } from "expo-router";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getWorkout } from "../lib/api/workouts";
 
 export default function ExerciseDetailsScreen() {
-  const params = useLocalSearchParams();
+  const {workoutId} = useLocalSearchParams();
+
+  const {data, isLoading, error} = useQuery ({
+    queryKey:['exercises', workoutId],
+    queryFn: () => getWorkout(workoutId)
+  });
 
   const[isInstructionsExpanded, setIsInstructionsExpanded ] = useState(false);
 
-  const exercise = exercises.find((item) => item.name == params.name);
+    if (isLoading) {
+      return <ActivityIndicator/>;
+    }
+  
+    if (error) {
+      return <Text>Exercise not found!</Text>;
+    }
+     
 
-  if (!exercise) {
-    return <Text>Exercise not found</Text>;
-  }
+  const exercise = data;
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -19,23 +19,13 @@ export default function ExercisesScreen() {
   if (error) {
     return <Text>Failed to fetch exercise</Text>;
   }
-  // const [workouts, setWorkouts] = useState([]);
-
-  // useEffect(()=> {
-  //   const fetchWorkouts = async () => {
-  //     const res = await listWorkouts();
-  //     setWorkouts(res);
-  //   };
-  //   fetchWorkouts();
-  // }, []);
-
     return (
     <View style={styles.container}>
       <FlatList
         data={data}
         contentContainerStyle= {{gap:5}}
-        //Use Key in the database: workoutID
-        keyExtractor={(item => item.name)}
+        //Use Key in the database: workoutId
+        keyExtractor={(item) => item.workoutId}
         renderItem={({ item }) => <ExerciseListItem item={item}/>}
       />
 

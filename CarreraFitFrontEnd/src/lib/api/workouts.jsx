@@ -14,3 +14,19 @@ export const listWorkouts = async () => {
       const data = await res.json();
       return await data;
 };
+
+export const getWorkout = async (workoutId) => {
+      
+      const res = await fetch(`${API_URL}/workouts/${workoutId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${btoa(user+":"+pass)}`
+        }
+      });
+      if(res.status !== 200) {
+        throw new Error("Error fetching the workouts");
+      }
+      const data = await res.json();
+      return await data;
+
+};
