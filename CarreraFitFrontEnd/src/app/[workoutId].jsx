@@ -5,6 +5,7 @@ import { Stack } from "expo-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getWorkout } from "../lib/api/workouts";
+import NewSetInput from "../components/NewSetInput";
 
 export default function ExerciseDetailsScreen() {
   const {workoutId} = useLocalSearchParams();
@@ -45,6 +46,8 @@ export default function ExerciseDetailsScreen() {
         <Text style={styles.instructions} numberOfLines={isInstructionsExpanded ? 0 : 3}>{exercise.instructions}</Text>
         <Text onPress = {() => setIsInstructionsExpanded(!isInstructionsExpanded)} style={styles.seeMore}>{isInstructionsExpanded ? 'See less' : 'See more'}</Text>
       </View>
+
+      <NewSetInput/>
     </ScrollView>
   );
 }
